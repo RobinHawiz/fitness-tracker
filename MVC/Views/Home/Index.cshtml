@@ -1,8 +1,36 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model MVC.Models.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="w-100 py-5 mb-4">
+    <div class="col-lg-6 mx-auto ">
+        <img class="d-block mx-auto mb-4 img-fluid" style="width: 180px;" src="~/assets/logo.svg" alt="Fitness Tracker logo">
+        <h1 class="display-5 fw-bold text-body-emphasis text-center">Welcome to <span class="text-purple">Fitness Tracker</span></h1>
+            <p class="lead mb-4 text-center">Fitness Tracker helps you record daily health and activity data, including weight, nutrition, steps, and distance. Track your progress over time and optionally share your journey with a coach.</p>
+            <div class="text-center">
+                <a class="btn btn-purple btn-lg px-4 gap-3 fw-bold" asp-area="Identity" asp-page="/Account/Register">START TODAY</a>
+            </div>
+    </div>
+</div>
+<div class="w-100 py-5 d-flex flex-row flex-wrap-reverse justify-content-center align-items-center gap-5">
+    <div class="col-lg-5">
+        @if (Model.UserNames.Count > 0)
+        {
+            <h2 class="fw-bold">Join our growing community of <span class="text-purple">@Model.UserNames.Count</span> members</h2>
+            <p class="lead">Here are some of our users:</p>
+            <ul class="list-group">
+                @foreach (var userName in Model.UserNames)
+                {
+                    <li class="list-group-item">@userName</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h2 class="fw-bold">Be the first to sign up and start tracking your fitness journey!</h2>
+        }
+    </div>
+    <img class="img-fluid rounded" src="~/assets/fit-girl.jpg" alt="Fit girl flexing her muscles" width="700" height="500" />
 </div>
