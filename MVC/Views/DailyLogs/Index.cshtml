@@ -1,0 +1,72 @@
+@model IEnumerable<MVC.Models.DailyLogIndexViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WeightKg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Carbs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Protein)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Calories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistanceKm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StepCount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @(item.Date.ToString())
+            </td>
+            <td>
+                @(item.WeightKg?.ToString() ?? "--")
+            </td>
+            <td>
+                @(item.Fat?.ToString() ?? "--")
+            </td>
+            <td>
+                @(item.Carbs?.ToString() ?? "--")
+            </td>
+            <td>
+                @(item.Protein?.ToString() ?? "--")
+            </td>
+            <td>
+                @(item.Calories?.ToString() ?? "--")
+            </td>
+            <td>
+                @(item.DistanceKm?.ToString() ?? "--")
+            </td>
+            <td>
+                @(item.StepCount?.ToString() ?? "--")
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
