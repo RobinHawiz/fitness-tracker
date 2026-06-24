@@ -97,4 +97,35 @@ public class DailyLogsController : Controller
         }
         return View(dailyLogFormViewModel);
     }
+
+
+    // GET: dailylogs/:id
+    [HttpGet("dailylogs/{id:int}")]
+    public async Task<IActionResult> Details(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+        var dailyLog = await _context.DailyLogs
+                        .Where(d => d.ApplicationUserId == userId! && d.Id == id)
+                        .Select(d => new DailyLogIndexViewModel
+                        {
+                            Id = d.Id,
+                            Date = d.Date,
+                            WeightKg = d.WeightKg,
+
+                            Fat = d.DailyMacros.Fat,
+                            Carbs = d.DailyMacros.Carbs,
+                            Protein = d.DailyMacros.Protein,
+                            Calories = d.DailyMacros.Calories,
+
+                            DistanceKm = d.DailyMovement.DistanceKm,
+                            StepCount = d.DailyMovement.StepCount
+                        }).FirstOrDefaultAsync();
+
+        if (dailyLog == null)
+        {
+            return NotFound();
+        }
+
+        return View(dailyLog);
+    }
 }
