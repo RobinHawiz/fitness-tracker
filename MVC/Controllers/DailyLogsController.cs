@@ -32,13 +32,13 @@ public class DailyLogsController : Controller
                             Date = d.Date,
                             WeightKg = d.WeightKg,
 
-                            Fat = d.DailyMacros == null ? null : d.DailyMacros.Fat,
-                            Carbs = d.DailyMacros == null ? null : d.DailyMacros.Carbs,
-                            Protein = d.DailyMacros == null ? null : d.DailyMacros.Protein,
-                            Calories = d.DailyMacros == null ? null : d.DailyMacros.Calories,
+                            Fat = d.DailyMacros.Fat,
+                            Carbs = d.DailyMacros.Carbs,
+                            Protein = d.DailyMacros.Protein,
+                            Calories = d.DailyMacros.Calories,
 
-                            DistanceKm = d.DailyMovement == null ? null : d.DailyMovement.DistanceKm,
-                            StepCount = d.DailyMovement == null ? null : d.DailyMovement.StepCount
+                            DistanceKm = d.DailyMovement.DistanceKm,
+                            StepCount = d.DailyMovement.StepCount
                         })
                         .ToListAsync();
 
