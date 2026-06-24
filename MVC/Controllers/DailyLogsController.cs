@@ -128,4 +128,71 @@ public class DailyLogsController : Controller
 
         return View(dailyLog);
     }
+
+    // GET: dailylogs/Edit/:id
+    public async Task<IActionResult> Edit(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+        var dailyLog = await _context.DailyLogs
+                        .Where(d => d.ApplicationUserId == userId! && d.Id == id)
+                        .Select(d => new DailyLogFormViewModel
+                        {
+                            Date = d.Date,
+                            WeightKg = d.WeightKg,
+
+                            Fat = d.DailyMacros.Fat,
+                            Carbs = d.DailyMacros.Carbs,
+                            Protein = d.DailyMacros.Protein,
+                            Calories = d.DailyMacros.Calories,
+
+                            DistanceKm = d.DailyMovement.DistanceKm,
+                            StepCount = d.DailyMovement.StepCount
+                        }).FirstOrDefaultAsync();
+
+        if (dailyLog == null)
+        {
+            return NotFound();
+        }
+
+        return View(dailyLog);
+    }
+
+    // POST: dailylogs/Edit/:id
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, DailyLogFormViewModel dailyLogFormViewModel)
+    {
+
+        if (ModelState.IsValid)
+        {
+
+            var userId = _userManager.GetUserId(User);
+
+            var dailyLog = await _context.DailyLogs
+                .Include(d => d.DailyMacros)
+                .Include(d => d.DailyMovement)
+                .FirstOrDefaultAsync(d => d.ApplicationUserId == userId && d.Id == id);
+
+            if (dailyLog == null)
+            {
+                return NotFound();
+            }
+
+            dailyLog.WeightKg = dailyLogFormViewModel.WeightKg;
+
+            dailyLog.DailyMacros.Fat = dailyLogFormViewModel.Fat;
+            dailyLog.DailyMacros.Carbs = dailyLogFormViewModel.Carbs;
+            dailyLog.DailyMacros.Protein = dailyLogFormViewModel.Protein;
+            dailyLog.DailyMacros.Calories = dailyLogFormViewModel.Calories;
+
+            dailyLog.DailyMovement.DistanceKm = dailyLogFormViewModel.DistanceKm;
+            dailyLog.DailyMovement.StepCount = dailyLogFormViewModel.StepCount;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(dailyLogFormViewModel);
+    }
 }
