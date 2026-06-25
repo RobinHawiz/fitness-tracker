@@ -195,4 +195,26 @@ public class DailyLogsController : Controller
 
         return View(dailyLogFormViewModel);
     }
+
+    // POST: /DailyLogs/Delete/:id
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+
+        var dailyLog = await _context.DailyLogs
+            .FirstOrDefaultAsync(d => d.ApplicationUserId == userId && d.Id == id);
+
+        if (dailyLog == null)
+        {
+            Console.WriteLine("test");
+            return NotFound();
+        }
+
+        _context.DailyLogs.Remove(dailyLog);
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
 }

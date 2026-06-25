@@ -68,6 +68,9 @@
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="return confirm('Delete this daily log?');">
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </form>
             </td>
         </tr>
 }
