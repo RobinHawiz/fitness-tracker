@@ -35,7 +35,7 @@ public class HomeController : Controller
     }
 
     [Authorize]
-    [HttpGet]
+    [HttpGet("dashboard")]
     public async Task<IActionResult> Dashboard()
     {
         var userId = _signInManager.UserManager.GetUserId(User);

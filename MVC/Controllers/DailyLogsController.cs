@@ -19,7 +19,7 @@ public class DailyLogsController : Controller
         _userManager = userManager;
     }
 
-    // GET: dailylogs
+    [HttpGet("dailylogs")]
     public async Task<IActionResult> Index()
     {
         var userId = _userManager.GetUserId(User);
@@ -45,7 +45,7 @@ public class DailyLogsController : Controller
         return View(dailyLogs);
     }
 
-    // GET: dailylogs/Create
+    [HttpGet("dailylogs/create")]
     public IActionResult Create()
     {
         var model = new DailyLogFormViewModel
@@ -55,8 +55,7 @@ public class DailyLogsController : Controller
         return View(model);
     }
 
-    // POST: dailylogs/Create
-    [HttpPost]
+    [HttpPost("dailylogs/create")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(DailyLogFormViewModel dailyLogFormViewModel)
     {
@@ -99,7 +98,6 @@ public class DailyLogsController : Controller
     }
 
 
-    // GET: dailylogs/:id
     [HttpGet("dailylogs/{id:int}")]
     public async Task<IActionResult> Details(int id)
     {
@@ -129,7 +127,7 @@ public class DailyLogsController : Controller
         return View(dailyLog);
     }
 
-    // GET: dailylogs/Edit/:id
+    [HttpGet("dailylogs/{id:int}/edit")]
     public async Task<IActionResult> Edit(int id)
     {
         var userId = _userManager.GetUserId(User);
@@ -157,8 +155,7 @@ public class DailyLogsController : Controller
         return View(dailyLog);
     }
 
-    // POST: dailylogs/Edit/:id
-    [HttpPost]
+    [HttpPost("dailylogs/{id:int}/edit")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, DailyLogFormViewModel dailyLogFormViewModel)
     {
@@ -196,8 +193,7 @@ public class DailyLogsController : Controller
         return View(dailyLogFormViewModel);
     }
 
-    // POST: /DailyLogs/Delete/:id
-    [HttpPost]
+    [HttpPost("dailylogs/{id:int}/delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
