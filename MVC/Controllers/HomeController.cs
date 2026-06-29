@@ -124,7 +124,7 @@ public class HomeController : Controller
 
 }
 
-public static partial class DateTimeExtensions
+public static class DateTimeExtensions
 {
     public static DateOnly FirstDayOfWeek(this DateOnly dt)
     {
