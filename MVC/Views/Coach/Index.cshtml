@@ -1,0 +1,41 @@
+﻿@model MVC.Models.CoachIndexViewModel
+
+@{
+    ViewData["Title"] = "Assign a Coach";
+}
+
+<div class="container pt-5">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="col-md-4">
+        <form asp-action="Assign">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="AssignCoach.UserName" class="control-label"></label>
+                <input asp-for="AssignCoach.UserName" class="form-control" />
+                <span asp-validation-for="AssignCoach.UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-4 mt-5">
+        <hr />
+        @if (Model.AssignedCoaches.Count == 0)
+        {
+            <h4>No coaches assigned yet.</h4>
+        }
+        else
+        {
+            <h4>Current Coaches</h4>
+            @foreach (var coach in Model.AssignedCoaches)
+            {
+                <p>@coach.UserName</p>
+            }
+        }
+    </div>
+</div>
