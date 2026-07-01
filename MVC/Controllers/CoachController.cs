@@ -90,4 +90,24 @@ public class CoachController : Controller
 
         return View("Index", viewModel);
     }
+
+    [HttpPost("coach/{id:int}/remove")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Remove(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+
+        var assignedCoach = await _context.CoachAssignments
+            .FirstOrDefaultAsync(d => d.MemberId == userId && d.Id == id);
+
+        if (assignedCoach == null)
+        {
+            return NotFound();
+        }
+
+        _context.CoachAssignments.Remove(assignedCoach);
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
 }

@@ -34,7 +34,12 @@
             <h4>Current Coaches</h4>
             @foreach (var coach in Model.AssignedCoaches)
             {
-                <p>@coach.UserName</p>
+                <div class="d-flex flex-row align-items-center gap-4">
+                    <p class="m-0">@coach.UserName</p>
+                    <form asp-action="Remove" asp-route-id="@coach.Id" onsubmit="return confirm('Remove @coach.UserName as your coach?');">
+                        <input type="submit" value="Remove" class="btn btn-outline-danger" />
+                    </form>
+                </div>
             }
         }
     </div>
