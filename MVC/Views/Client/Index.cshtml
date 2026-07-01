@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MVC.Models.AssignedClientViewModel>
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<div class="container pt-5">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="col-md-4 mt-5">
+        <hr />
+        @if (!Model.Any())
+        {
+            <h4>No clients assigned yet.</h4>
+        }
+        else
+        {
+            <h4>Current Clients</h4>
+            @foreach (var client in Model)
+            {
+                <div class="d-flex flex-row align-items-center gap-4">
+                    <p class="m-0">@client.UserName</p>
+                    <form asp-action="Remove" asp-route-id="@client.Id" onsubmit="return confirm('Remove @client.UserName as your client?');">
+                        <input type="submit" value="Remove" class="btn btn-outline-danger" />
+                    </form>
+                </div>
+            }
+        }
+    </div>
+</div>
