@@ -20,6 +20,7 @@ public class ClientController : Controller
         _userManager = userManager;
     }
 
+    [HttpGet("client")]
     public async Task<IActionResult> Index()
     {
         var userId = _userManager.GetUserId(User);
