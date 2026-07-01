@@ -36,6 +36,53 @@ public class ClientController : Controller
         return View(assignedClients);
     }
 
+    [HttpGet("client/{id:int}/dailylogs")]
+    public async Task<IActionResult> DailyLogs(int id)
+    {
+        var userId = _userManager.GetUserId(User);
+
+        var coachAssignment = await _context.CoachAssignments
+        .Where(ca => ca.CoachId == userId && ca.Id == id)
+        .Select(ca => new
+        {
+            ca.MemberId,
+            ca.Member.UserName
+        })
+        .FirstOrDefaultAsync();
+
+        if (coachAssignment == null)
+        {
+            return NotFound();
+        }
+
+        var dailyLogs = await _context.DailyLogs
+                        .Where(d => d.ApplicationUserId == coachAssignment.MemberId)
+                        .OrderByDescending(d => d.Date)
+                        .Select(d => new DailyLogIndexViewModel
+                        {
+                            Id = d.Id,
+                            Date = d.Date,
+                            WeightKg = d.WeightKg,
+
+                            Fat = d.DailyMacros.Fat,
+                            Carbs = d.DailyMacros.Carbs,
+                            Protein = d.DailyMacros.Protein,
+                            Calories = d.DailyMacros.Calories,
+
+                            DistanceKm = d.DailyMovement.DistanceKm,
+                            StepCount = d.DailyMovement.StepCount
+                        })
+                        .ToListAsync();
+
+        var viewModel = new ClientDailyLogViewModel
+        {
+            UserName = coachAssignment.UserName!,
+            DailyLogs = dailyLogs
+        };
+
+        return View(viewModel);
+    }
+
     [HttpPost("client/{id:int}/remove")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Remove(int id)

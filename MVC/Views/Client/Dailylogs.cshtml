@@ -1,0 +1,69 @@
+﻿@model MVC.Models.ClientDailyLogViewModel
+
+@{
+    ViewData["Title"] = $"{Model.UserName}'s Daily Logs";
+}
+
+<h1>Viewing @ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].WeightKg)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].Fat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].Carbs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].Protein)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].Calories)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].DistanceKm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DailyLogs[0].StepCount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.DailyLogs)
+        {
+            <tr>
+                <td>
+                    @(item.Date.ToString())
+                </td>
+                <td>
+                    @(item.WeightKg?.ToString() ?? "--")
+                </td>
+                <td>
+                    @(item.Fat?.ToString() ?? "--")
+                </td>
+                <td>
+                    @(item.Carbs?.ToString() ?? "--")
+                </td>
+                <td>
+                    @(item.Protein?.ToString() ?? "--")
+                </td>
+                <td>
+                    @(item.Calories?.ToString() ?? "--")
+                </td>
+                <td>
+                    @(item.DistanceKm?.ToString() ?? "--")
+                </td>
+                <td>
+                    @(item.StepCount?.ToString() ?? "--")
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
