@@ -25,10 +25,12 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="nav-item d-flex flex-row gap-2">
                             @if (SignInManager.IsSignedIn(User))
                             {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="DailyLogs" asp-action="Index">My Logs</a>
+                                <a class="nav-link text-dark" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                                <a class="nav-link text-dark" asp-controller="DailyLogs" asp-action="Index">My Logs</a>
+                                <a class="nav-link text-dark" asp-controller="Coach" asp-action="Index">Coaches</a>
                             }
                         </li>
                     </ul>
