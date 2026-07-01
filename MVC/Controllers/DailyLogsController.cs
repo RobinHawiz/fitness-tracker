@@ -204,7 +204,6 @@ public class DailyLogsController : Controller
 
         if (dailyLog == null)
         {
-            Console.WriteLine("test");
             return NotFound();
         }
 
