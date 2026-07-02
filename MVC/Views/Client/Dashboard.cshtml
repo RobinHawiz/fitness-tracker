@@ -1,0 +1,24 @@
+﻿@model MVC.Models.ClientDashboardViewModel
+
+@{
+    ViewData["Title"] = $"{Model.UserName}'s Dashboard";
+}
+
+<div class="container pt-5">
+    <h1>@ViewData["Title"]</h1>
+
+    <p>Weekly average weight: @(Model.AverageWeeklyWeight?.ToString() ?? "--")</p>
+    <p>Weekly average calories: @(Model.AverageWeeklyCalories?.ToString() ?? "--")</p>
+    <p>Weekly distance: @(Model.TotalWeeklyDistance?.ToString() ?? "--")</p>
+    <p>Weekly steps: @(Model.TotalWeeklySteps?.ToString() ?? "--")</p>
+
+    <p>Monthly average weight: @(Model.AverageMonthlyWeight?.ToString() ?? "--")</p>
+    <p>Monthly average calories: @(Model.AverageMonthlyCalories?.ToString() ?? "--")</p>
+    <p>Monthly distance: @(Model.TotalMonthlyDistance?.ToString() ?? "--")</p>
+    <p>Monthly steps: @(Model.TotalMonthlySteps?.ToString() ?? "--")</p>
+
+    <p>Yearly average weight: @(Model.AverageYearlyWeight?.ToString() ?? "--")</p>
+    <p>Yearly average calories: @(Model.AverageYearlyCalories?.ToString() ?? "--")</p>
+    <p>Yearly distance: @(Model.TotalYearlyDistance?.ToString() ?? "--")</p>
+    <p>Yearly steps: @(Model.TotalYearlySteps?.ToString() ?? "--")</p>
+</div>

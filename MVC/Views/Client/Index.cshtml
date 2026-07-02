@@ -21,6 +21,7 @@
                 <div class="d-flex flex-row align-items-center gap-4">
                     <p class="m-0">@client.UserName</p>
                     <a asp-action="DailyLogs" asp-route-id="@client.Id" class="btn btn-outline-info">View Daily Logs</a>
+                    <a asp-action="Dashboard" asp-route-id="@client.Id" class="btn btn-outline-info">View Dashboard</a>
                     <form asp-action="Remove" asp-route-id="@client.Id" onsubmit="return confirm('Remove @client.UserName as your client?');">
                         <input type="submit" value="Remove" class="btn btn-outline-danger" />
                     </form>
