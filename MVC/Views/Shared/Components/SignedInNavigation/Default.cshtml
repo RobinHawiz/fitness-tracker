@@ -15,12 +15,12 @@
                 <li class="nav-item d-flex flex-row gap-2">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
-                        <a class="nav-link text-dark" asp-controller="DailyLogs" asp-action="Index">My Logs</a>
-                        <a class="nav-link text-dark" asp-controller="Coach" asp-action="Index">Coaches</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                        <a class="nav-link" asp-controller="DailyLogs" asp-action="Index">My Logs</a>
+                        <a class="nav-link" asp-controller="Coach" asp-action="Index">Coaches</a>
                         @if (Model)
                         {
-                            <a class="nav-link text-dark" asp-controller="Client" asp-action="Index">Clients</a>
+                            <a class="nav-link" asp-controller="Client" asp-action="Index">Clients</a>
                         }
                     }
                 </li>
