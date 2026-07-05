@@ -48,3 +48,60 @@ body {
 .text-purple {
     color: #6f42c1;
 }
+
+header {
+    background-color: #6f42c1 !important;
+}
+
+.navbar {
+    width: 93%;
+    margin-inline: auto;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 0;
+    color: rgb(255, 255, 255, 1);
+}
+
+.navbar-brand:hover {
+    color: white;
+}
+
+.nav-link {
+    font-weight: 700;
+    color: rgb(255, 255, 255, 0.80);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-link {
+        transition: none;
+    }
+}
+
+.nav-link:hover {
+    color: rgb(255, 255, 255, 1) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.navbar-toggler {
+    border: 2px solid white;
+}
+
+.nav-link:focus,
+.navbar-brand:focus,
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.nav-link:focus-visible,
+.navbar-brand:focus-visible,
+.navbar-toggler:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.4);
+    color: white;
+}
