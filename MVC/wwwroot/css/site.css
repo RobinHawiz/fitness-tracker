@@ -49,6 +49,10 @@ body {
     color: #6f42c1;
 }
 
+footer {
+    background-color: #f6f6f8;
+}
+
 header {
     background-color: #6f42c1 !important;
 }
