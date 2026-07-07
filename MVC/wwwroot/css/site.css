@@ -45,8 +45,29 @@ body {
     --bs-btn-disabled-border-color: #0d6efd;
 }
 
+.btn-outline-purple {
+    --bs-btn-color: #6f42c1;
+    --bs-btn-border-color: #6f42c1;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #6f42c1;
+    --bs-btn-hover-border-color: #6f42c1;
+    --bs-btn-focus-shadow-rgb: 111, 66, 193;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #6f42c1;
+    --bs-btn-active-border-color: #6f42c1;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #0d6efd;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #0d6efd;
+    --bs-gradient: none;
+}
+
 .text-purple {
     color: #6f42c1;
+}
+
+.bg-purple {
+    background-color: #6f42c1;
 }
 
 footer {
@@ -78,12 +99,6 @@ header {
     color: rgb(255, 255, 255, 0.80);
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .nav-link {
-        transition: none;
-    }
-}
-
 .nav-link:hover {
     color: rgb(255, 255, 255, 1) !important;
 }
@@ -108,4 +123,23 @@ header {
     outline: none;
     box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.4);
     color: white;
+}
+
+.daily-log-card {
+    transition: transform 100ms ease-in-out;
+}
+
+.daily-log-card:hover {
+    transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .daily-log-card {
+        transition: none;
+    }
+
+    .daily-log-card:hover {
+        transform: none;
+    }
 }
