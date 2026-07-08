@@ -1,64 +1,86 @@
 @model MVC.Models.DailyLogFormViewModel
 
-@{
-    ViewData["Title"] = "Edit";
-}
+  @{
+      ViewData["Title"] = "Edit Daily Log";
+  }
 
-<div class="container pt-5">
-    <h4>Editing Daily log for: @(Model.Date.ToString())</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+  <div class="container py-5">
+      <div class="mb-4">
+        <h1 class="text-purple">Editing Daily Log for: @Model.Date.ToString()</h1>
+      </div>
 
-                <input asp-for="Date" hidden class="form-control" />
+      <div class="card shadow-sm">
+          <div class="card-body p-4">
+              <form asp-action="Edit">
+                  <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                <div class="form-group">
-                    <label asp-for="WeightKg" class="control-label"></label>
-                    <input asp-for="WeightKg" class="form-control" />
-                    <span asp-validation-for="WeightKg" class="text-danger"></span>
-                </div>
+                  <input asp-for="Date" hidden />
 
-                <div class="form-group">
-                    <label asp-for="Fat" class="control-label"></label>
-                    <input asp-for="Fat" class="form-control" />
-                    <span asp-validation-for="Fat" class="text-danger"></span>
-                </div>
+                  <fieldset class="mb-4">
+                      <legend class="h5 text-purple fw-bold">Body metrics</legend>
 
-                <div class="form-group">
-                    <label asp-for="Carbs" class="control-label"></label>
-                    <input asp-for="Carbs" class="form-control" />
-                    <span asp-validation-for="Carbs" class="text-danger"></span>
-                </div>
+                      <div class="row row-gap-3">
+                          <div class="col-12">
+                              <label asp-for="WeightKg" class="form-label fw-bold"></label>
+                              <input asp-for="WeightKg" class="form-control" placeholder="Example: 72,5" />
+                              <span asp-validation-for="WeightKg" class="text-danger"></span>
+                          </div>
+                      </div>
+                  </fieldset>
 
-                <div class="form-group">
-                    <label asp-for="Protein" class="control-label"></label>
-                    <input asp-for="Protein" class="form-control" />
-                    <span asp-validation-for="Protein" class="text-danger"></span>
-                </div>
+                  <fieldset class="mb-4">
+                      <legend class="h5 text-purple fw-bold">Nutrition</legend>
 
-                <div class="form-group">
-                    <label asp-for="Calories" class="control-label"></label>
-                    <input asp-for="Calories" class="form-control" />
-                    <span asp-validation-for="Calories" class="text-danger"></span>
-                </div>
+                      <div class="row row-gap-3">
+                          <div class="col-12 col-md-6 col-lg-3">
+                              <label asp-for="Calories" class="form-label fw-bold"></label>
+                              <input asp-for="Calories" class="form-control" />
+                              <span asp-validation-for="Calories" class="text-danger"></span>
+                          </div>
 
-                <div class="form-group">
-                    <label asp-for="DistanceKm" class="control-label"></label>
-                    <input asp-for="DistanceKm" class="form-control" />
-                    <span asp-validation-for="DistanceKm" class="text-danger"></span>
-                </div>
+                          <div class="col-12 col-md-6 col-lg-3">
+                              <label asp-for="Fat" class="form-label fw-bold"></label>
+                              <input asp-for="Fat" class="form-control" />
+                              <span asp-validation-for="Fat" class="text-danger"></span>
+                          </div>
 
-                <div class="form-group">
-                    <label asp-for="StepCount" class="control-label"></label>
-                    <input asp-for="StepCount" class="form-control" />
-                    <span asp-validation-for="StepCount" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                          <div class="col-12 col-md-6 col-lg-3">
+                              <label asp-for="Carbs" class="form-label fw-bold"></label>
+                              <input asp-for="Carbs" class="form-control" />
+                              <span asp-validation-for="Carbs" class="text-danger"></span>
+                          </div>
+
+                          <div class="col-12 col-md-6 col-lg-3">
+                              <label asp-for="Protein" class="form-label fw-bold"></label>
+                              <input asp-for="Protein" class="form-control" />
+                              <span asp-validation-for="Protein" class="text-danger"></span>
+                          </div>
+                      </div>
+                  </fieldset>
+
+                  <fieldset class="mb-4">
+                      <legend class="h5 text-purple fw-bold">Movement</legend>
+
+                      <div class="row row-gap-3">
+                          <div class="col-12 col-md-6">
+                              <label asp-for="DistanceKm" class="form-label fw-bold"></label>
+                              <input asp-for="DistanceKm" class="form-control" placeholder="Example: 5,2" />
+                              <span asp-validation-for="DistanceKm" class="text-danger"></span>
+                          </div>
+
+                          <div class="col-12 col-md-6">
+                              <label asp-for="StepCount" class="form-label fw-bold"></label>
+                              <input asp-for="StepCount" class="form-control" />
+                              <span asp-validation-for="StepCount" class="text-danger"></span>
+                          </div>
+                      </div>
+                  </fieldset>
+
+                  <div class="d-flex gap-2">
+                      <input type="submit" value="Save changes" class="btn btn-purple" />
+                      <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
