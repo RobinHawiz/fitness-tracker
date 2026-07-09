@@ -1,33 +1,37 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #6f42c1;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #6f42c1;
+}
+
+.form-control:focus {
+    border-color: var(--bs-border-color);
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
 
 .btn-purple {
@@ -90,18 +94,18 @@ header {
     color: rgb(255, 255, 255, 1);
 }
 
-.navbar-brand:hover {
-    color: white;
-}
+    .navbar-brand:hover {
+        color: white;
+    }
 
 .nav-link {
     font-weight: 700;
     color: rgb(255, 255, 255, 0.80);
 }
 
-.nav-link:hover {
-    color: rgb(255, 255, 255, 1) !important;
-}
+    .nav-link:hover {
+        color: rgb(255, 255, 255, 1) !important;
+    }
 
 .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
@@ -111,27 +115,27 @@ header {
     border: 2px solid white;
 }
 
-.nav-link:focus,
-.navbar-brand:focus,
-.navbar-toggler:focus {
-    box-shadow: none;
-}
+    .nav-link:focus,
+    .navbar-brand:focus,
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
 
-.nav-link:focus-visible,
-.navbar-brand:focus-visible,
-.navbar-toggler:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.4);
-    color: white;
-}
+    .nav-link:focus-visible,
+    .navbar-brand:focus-visible,
+    .navbar-toggler:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.4);
+        color: white;
+    }
 
 .daily-log-card {
     transition: transform 100ms ease-in-out;
 }
 
-.daily-log-card:hover {
-    transform: translateY(-3px);
-}
+    .daily-log-card:hover {
+        transform: translateY(-3px);
+    }
 
 @media (prefers-reduced-motion: reduce) {
     .nav-link,
@@ -139,7 +143,7 @@ header {
         transition: none;
     }
 
-    .daily-log-card:hover {
-        transform: none;
-    }
+        .daily-log-card:hover {
+            transform: none;
+        }
 }
