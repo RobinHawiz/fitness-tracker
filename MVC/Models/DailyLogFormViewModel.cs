@@ -13,12 +13,16 @@ public class DailyLogFormViewModel
 
     // DailyMacros
     [Range(0, 99999.99, ErrorMessage = "Fat cannot be negative.")]
+    [DisplayName("Fat (g)")]
     public decimal? Fat { get; set; }
     [Range(0, 99999.99, ErrorMessage = "Carbs cannot be negative.")]
+    [DisplayName("Carbs (g)")]
     public decimal? Carbs { get; set; }
     [Range(0, 99999.99, ErrorMessage = "Protein cannot be negative.")]
+    [DisplayName("Protein (g)")]
     public decimal? Protein { get; set; }
     [Range(0, int.MaxValue, ErrorMessage = "Calories cannot be negative.")]
+    [DisplayName("Calories (kcal)")]
     public int? Calories { get; set; }
 
     // DailyMovement
