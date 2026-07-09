@@ -4,29 +4,55 @@
     ViewData["Title"] = "Clients";
 }
 
-<div class="container pt-5">
-    <h1>@ViewData["Title"]</h1>
+<div class="container py-5">
+    <div class="mb-4">
+        <h1 class="text-purple">Clients</h1>
+        <p class="text-muted mb-0">
+            View logs and statistics from users who have assigned you as their coach.
+        </p>
+    </div>
 
-    <div class="col-md-4 mt-5">
-        <hr />
-        @if (!Model.Any())
-        {
-            <h4>No clients assigned yet.</h4>
-        }
-        else
-        {
-            <h4>Current Clients</h4>
+    @if (!Model.Any())
+    {
+        <div class="card shadow-sm">
+            <div class="card-body p-4 text-center">
+                <h2 class="h5 text-purple fw-bold">No clients assigned yet</h2>
+                <p class="text-muted mb-0">
+                    Clients will appear here when another user gives you coach access.
+                </p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row row-gap-4">
             @foreach (var client in Model)
             {
-                <div class="d-flex flex-row align-items-center gap-4">
-                    <p class="m-0">@client.UserName</p>
-                    <a asp-action="DailyLogs" asp-route-id="@client.Id" class="btn btn-outline-info">View Daily Logs</a>
-                    <a asp-action="Dashboard" asp-route-id="@client.Id" class="btn btn-outline-info">View Dashboard</a>
-                    <form asp-action="Remove" asp-route-id="@client.Id" onsubmit="return confirm('Remove @client.UserName as your client?');">
-                        <input type="submit" value="Remove" class="btn btn-outline-danger" />
-                    </form>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="mb-4">
+                                <p class="text-muted small mb-1">Client</p>
+                                <h2 class="h5 text-purple fw-bold mb-0">@client.UserName</h2>
+                            </div>
+
+                            <div class="d-flex flex-column gap-2">
+                                <a asp-action="Dashboard" asp-route-id="@client.Id" class="btn btn-outline-purple text-nowrap" aria-label="View @client.UserName's dashboard">
+                                    View dashboard
+                                </a>
+
+                                <a asp-action="DailyLogs" asp-route-id="@client.Id" class="btn btn-outline-purple text-nowrap" aria-label="View @client.UserName's daily logs">
+                                    View daily logs
+                                </a>
+
+                                <form asp-action="Remove" asp-route-id="@client.Id" onsubmit="return confirm('Remove @client.UserName from your clients?');">
+                                    <input type="submit" value="Remove client" class="btn btn-outline-danger w-100" aria-label="Remove @client.UserName from your clients" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             }
-        }
-    </div>
+        </div>
+    }
 </div>
