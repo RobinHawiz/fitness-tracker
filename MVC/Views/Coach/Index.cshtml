@@ -1,46 +1,76 @@
 ﻿@model MVC.Models.CoachIndexViewModel
 
 @{
-    ViewData["Title"] = "Assign a Coach";
+    ViewData["Title"] = "Coach Access";
 }
 
-<div class="container pt-5">
-    <h1>@ViewData["Title"]</h1>
-
-    <div class="col-md-4">
-        <form asp-action="Assign">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="AssignCoach.UserName" class="control-label"></label>
-                <input asp-for="AssignCoach.UserName" class="form-control" />
-                <span asp-validation-for="AssignCoach.UserName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container py-5">
+    <div class="mb-4">
+        <h1 class="text-purple">Coach Access</h1>
+        <p class="text-muted mb-0">
+            Manage which users can view your logs and data.
+        </p>
     </div>
 
-    <div class="col-md-4 mt-5">
-        <hr />
-        @if (Model.AssignedCoaches.Count == 0)
-        {
-            <h4>No coaches assigned yet.</h4>
-        }
-        else
-        {
-            <h4>Current Coaches</h4>
-            @foreach (var coach in Model.AssignedCoaches)
-            {
-                <div class="d-flex flex-row align-items-center gap-4">
-                    <p class="m-0">@coach.UserName</p>
-                    <form asp-action="Remove" asp-route-id="@coach.Id" onsubmit="return confirm('Remove @coach.UserName as your coach?');">
-                        <input type="submit" value="Remove" class="btn btn-outline-danger" />
+    <div class="row g-4">
+        <div class="col-12 col-lg-5">
+            <div class="card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h2 class="h5 text-purple fw-bold">Assign a coach</h2>
+                    <p class="text-muted small">
+                        A coach can view your logs and statistics, but cannot edit or delete your data.
+                    </p>
+
+                    <form asp-action="Assign">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="AssignCoach.UserName" class="form-label fw-bold"></label>
+                            <input asp-for="AssignCoach.UserName" class="form-control" placeholder="Enter username" />
+                            <span asp-validation-for="AssignCoach.UserName" class="text-danger"></span>
+                        </div>
+
+                        <input type="submit" value="Assign coach" class="btn btn-purple" />
                     </form>
                 </div>
-            }
-        }
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+            <div class="card shadow-sm h-100">
+                <div class="card-body p-4">
+                    <h2 class="h5 text-purple fw-bold">Current coaches</h2>
+
+                    <p class="text-muted small">
+                        These users currently have read only access to your fitness data.
+                    </p>
+
+                    @if (Model.AssignedCoaches.Count == 0)
+                    {
+                        <div class="border rounded p-4 text-center">
+                            <p class="mb-0 text-muted">You have not assigned any coaches yet.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var coach in Model.AssignedCoaches)
+                            {
+                                <div class="list-group-item px-0 d-flex flex-wrap justify-content-between align-items-sm-center gap-3">
+                                    <div>
+                                        <p class="fw-bold mb-0">@coach.UserName</p>
+                                        <p class="text-muted small mb-0">Assigned coach</p>
+                                    </div>
+
+                                    <form asp-action="Remove" asp-route-id="@coach.Id" onsubmit="return confirm('Remove @coach.UserName as your coach?');">
+                                        <input type="submit" value="Remove" class="btn btn-outline-danger btn-sm" />
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
