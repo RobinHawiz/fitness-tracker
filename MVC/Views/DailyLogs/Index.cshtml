@@ -5,9 +5,15 @@
 }
 
 <div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="text-purple">My Logs</h1>
-        <a asp-action="Create" class="btn btn-purple">Create New</a>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-end gap-3 mb-4">
+        <div>
+            <h1 class="text-purple">My Logs</h1>
+            <p class="text-muted mb-0">
+                Review and manage your logged body metrics, nutrition and movement.
+            </p>
+        </div>
+
+        <a asp-action="Create" class="btn btn-purple text-nowrap">Create New</a>
     </div>
 
     @if (!Model.Any())
