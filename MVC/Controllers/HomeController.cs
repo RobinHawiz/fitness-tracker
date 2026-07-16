@@ -100,7 +100,7 @@ public class HomeController : Controller
 
         model.SelectedDate = selectedDate;
 
-        // Monthly data
+        // Monthly statistics
         var firstDayOfMonth = selectedDateOnly.FirstDayOfMonth();
         var lastDayOfMonth = selectedDateOnly.LastDayOfMonth();
 
@@ -118,6 +118,26 @@ public class HomeController : Controller
 
         var monthlySteps = monthlyData.Where(d => d.StepCount.HasValue).Select(d => d.StepCount!.Value).ToList();
         model.TotalMonthlySteps = monthlySteps.Count > 0 ? monthlySteps.Sum() : null;
+
+        // Chart data
+        foreach (var sli in model.AvailableDates.OrderBy(sli => sli.Value))
+        {
+            var date = DateOnly.Parse(sli.Value);
+
+            firstDayOfMonth = date.FirstDayOfMonth();
+            lastDayOfMonth = date.LastDayOfMonth();
+
+            monthlyWeights = dailyLogs
+                                .Where(d => d.Date >= firstDayOfMonth && d.Date <= lastDayOfMonth && d.WeightKg.HasValue)
+                                .Select(d => d.WeightKg!.Value)
+                                .ToList();
+
+            if(monthlyWeights.Count > 0)
+            {
+                model.AverageWeights.Add(Math.Round(monthlyWeights.Average(), 2));
+                model.ChartLabels.Add($"{english.DateTimeFormat.GetAbbreviatedMonthName(date.Month)} {date.Year}");
+            }
+        }
 
         return View(model);
     }

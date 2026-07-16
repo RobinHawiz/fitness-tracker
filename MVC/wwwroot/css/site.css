@@ -154,6 +154,11 @@ header {
     font-size: 0.9rem;
 }
 
+.chart-container {
+    width: 100%;
+    height: 60dvh;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .nav-link,
     .daily-log-card {
