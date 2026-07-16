@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVC.Data;
 using MVC.Extensions;
 using MVC.Models;
 using MVC.Models.Entities;
+using System.Globalization;
 
 namespace MVC.Controllers;
 
@@ -87,7 +89,7 @@ public class ClientController : Controller
 
     [Authorize]
     [HttpGet("client/{id:int}/dashboard")]
-    public async Task<IActionResult> Dashboard(int id)
+    public async Task<IActionResult> Dashboard(int id, string? selectedDate)
     {
         var userId = _userManager.GetUserId(User);
 
@@ -124,40 +126,56 @@ public class ClientController : Controller
                 })
                 .ToListAsync();
 
-        var dateNow = DateOnly.FromDateTime(DateTime.Now);
         var model = new ClientDashboardViewModel
         {
             UserName = coachAssignment.UserName!
         };
+        var english = CultureInfo.GetCultureInfo("en-US");
+        model.AvailableDates = dailyLogs
+                                .Select(e => new
+                                {
+                                    e.Date.Year,
+                                    e.Date.Month
+                                })
+                                .Distinct()
+                                .OrderByDescending(e => e.Year)
+                                .ThenByDescending(e => e.Month)
+                                .Select(e => new SelectListItem
+                                {
+                                    Value = $"{e.Year}-{e.Month:D2}",
+                                    Text = $"{english.DateTimeFormat.GetMonthName(e.Month)} {e.Year}"
+                                })
+                                .ToList();
 
-        // Weekly data
+        if (model.AvailableDates.Count == 0)
+        {
+            return View(model);
+        }
 
-        var firstDayOfWeek = dateNow.FirstDayOfWeek();
-        var lastDayOfWeek = dateNow.LastDayOfWeek();
+        DateOnly selectedDateOnly;
+        var latestAvailableDate = model.AvailableDates.First().Value;
 
-        var weeklyData = dailyLogs.Where(d => d.Date >= firstDayOfWeek && d.Date <= lastDayOfWeek).ToList();
+        if (selectedDate != null && model.AvailableDates.Any(sli => sli.Value == selectedDate))
+        {
+            selectedDateOnly = DateOnly.Parse(selectedDate);
+        }
+        else
+        {
+            selectedDate = latestAvailableDate;
+            selectedDateOnly = DateOnly.Parse(selectedDate);
+        }
 
-        var weeklyWeights = weeklyData.Where(d => d.WeightKg.HasValue).Select(d => d.WeightKg!.Value).ToList();
-        model.AverageWeeklyWeight = weeklyWeights.Count > 0 ? Math.Round(weeklyWeights.Average(), 2) : null;
-
-        var weeklyCalories = weeklyData.Where(d => d.Calories.HasValue).Select(d => d.Calories!.Value).ToList();
-        model.AverageWeeklyCalories = weeklyCalories.Count > 0 ? Convert.ToInt32(weeklyCalories.Average()) : null;
-
-        var weeklyDistance = weeklyData.Where(d => d.DistanceKm.HasValue).Select(d => d.DistanceKm!.Value).ToList();
-        model.TotalWeeklyDistance = weeklyDistance.Count > 0 ? Math.Round(weeklyDistance.Sum(), 2) : null;
-
-        var weeklySteps = weeklyData.Where(d => d.StepCount.HasValue).Select(d => d.StepCount!.Value).ToList();
-        model.TotalWeeklySteps = weeklySteps.Count > 0 ? weeklySteps.Sum() : null;
+        model.SelectedDate = selectedDate;
 
         // Monthly data
-
-        var firstDayOfMonth = dateNow.FirstDayOfMonth();
-        var lastDayOfMonth = dateNow.LastDayOfMonth();
+        var firstDayOfMonth = selectedDateOnly.FirstDayOfMonth();
+        var lastDayOfMonth = selectedDateOnly.LastDayOfMonth();
 
         var monthlyData = dailyLogs.Where(d => d.Date >= firstDayOfMonth && d.Date <= lastDayOfMonth).ToList();
 
         var monthlyWeights = monthlyData.Where(d => d.WeightKg.HasValue).Select(d => d.WeightKg!.Value).ToList();
         model.AverageMonthlyWeight = monthlyWeights.Count > 0 ? Math.Round(monthlyWeights.Average(), 2) : null;
+        model.ChangeInMonthlyWeight = monthlyWeights.Count > 1 ? monthlyWeights.First() - monthlyWeights.Last() : null;
 
         var monthlyCalories = monthlyData.Where(d => d.Calories.HasValue).Select(d => d.Calories!.Value).ToList();
         model.AverageMonthlyCalories = monthlyCalories.Count > 0 ? Convert.ToInt32(monthlyCalories.Average()) : null;
@@ -167,25 +185,6 @@ public class ClientController : Controller
 
         var monthlySteps = monthlyData.Where(d => d.StepCount.HasValue).Select(d => d.StepCount!.Value).ToList();
         model.TotalMonthlySteps = monthlySteps.Count > 0 ? monthlySteps.Sum() : null;
-
-        // Yearly data
-
-        var firstDayOfYear = dateNow.FirstDayOfYear();
-        var lastDayOfYear = dateNow.LastDayOfYear();
-
-        var yearlyData = dailyLogs.Where(d => d.Date >= firstDayOfYear && d.Date <= lastDayOfYear).ToList();
-
-        var yearlyWeights = yearlyData.Where(d => d.WeightKg.HasValue).Select(d => d.WeightKg!.Value).ToList();
-        model.AverageYearlyWeight = yearlyWeights.Count > 0 ? Math.Round(yearlyWeights.Average(), 2) : null;
-
-        var yearlyCalories = yearlyData.Where(d => d.Calories.HasValue).Select(d => d.Calories!.Value).ToList();
-        model.AverageYearlyCalories = yearlyCalories.Count > 0 ? Convert.ToInt32(yearlyCalories.Average()) : null;
-
-        var yearlyDistance = yearlyData.Where(d => d.DistanceKm.HasValue).Select(d => d.DistanceKm!.Value).ToList();
-        model.TotalYearlyDistance = yearlyDistance.Count > 0 ? Math.Round(yearlyDistance.Sum(), 2) : null;
-
-        var yearlySteps = yearlyData.Where(d => d.StepCount.HasValue).Select(d => d.StepCount!.Value).ToList();
-        model.TotalYearlySteps = yearlySteps.Count > 0 ? yearlySteps.Sum() : null;
 
         return View(model);
     }
