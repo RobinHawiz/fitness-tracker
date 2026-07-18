@@ -2,7 +2,7 @@
 
 namespace MVC.Models;
 
-public class HomeDashboardViewModel
+public class DashboardViewModel
 {
     // Monthly statistics
     public decimal? AverageMonthlyWeight { get; set; } = null;
@@ -12,8 +12,8 @@ public class HomeDashboardViewModel
     public int? TotalMonthlySteps { get; set; } = null;
     // Select text and values
     public string SelectedDate { get; set; } = "";
-    public List<SelectListItem> AvailableDates { get; set; } = new ();
+    public List<SelectListItem> AvailableDates { get; set; } = new();
     // Chart data
-    public List<string> ChartLabels { get; set; } = new ();
-    public List<decimal> AverageWeights { get; set; } = new ();
+    public List<string> ChartLabels { get; set; } = new();
+    public List<decimal> AverageWeights { get; set; } = new();
 }

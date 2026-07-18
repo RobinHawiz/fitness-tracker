@@ -1,0 +1,151 @@
+﻿@model MVC.Models.DashboardViewModel
+
+<h2 class="h4 text-purple fw-bold mb-3">Monthly overview</h2>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-5 g-3">
+    <div class="col">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-4">
+                <p class="text-muted fw-bold mb-2">Average weight</p>
+
+                @if (Model.AverageMonthlyWeight.HasValue)
+                {
+                    <p class="h3 text-purple fw-bold mb-1">
+                        @Model.AverageMonthlyWeight.Value.ToString("0.##")
+                        <span class="fs-6 fw-normal text-muted">kg</span>
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        Across recorded weigh-ins
+                    </p>
+                }
+                else
+                {
+                    <p class="h3 text-muted fw-bold mb-1">--</p>
+                    <p class="small text-muted mb-0">No weight recorded</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-4">
+                <p class="text-muted fw-bold mb-2">Weight change</p>
+
+                @if (Model.ChangeInMonthlyWeight.HasValue)
+                {
+                    var prefix = Model.ChangeInMonthlyWeight.Value > 0 ? "+" : "";
+
+                    <p class="h3 text-purple fw-bold mb-1">
+                        @($"{prefix}{Model.ChangeInMonthlyWeight.Value:0.##}")
+                        <span class="fs-6 fw-normal text-muted">kg</span>
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        From first to latest weigh-in
+                    </p>
+                }
+                else
+                {
+                    <p class="h3 text-muted fw-bold mb-1">--</p>
+                    <p class="small text-muted mb-0">
+                        Requires at least two weigh-ins
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-4">
+                <p class="text-muted fw-bold mb-2">Average calories</p>
+
+                @if (Model.AverageMonthlyCalories.HasValue)
+                {
+                    <p class="h3 text-purple fw-bold mb-1">
+                        @Model.AverageMonthlyCalories.Value.ToString("N0")
+                        <span class="fs-6 fw-normal text-muted">kcal</span>
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        Across days with recorded calories
+                    </p>
+                }
+                else
+                {
+                    <p class="h3 text-muted fw-bold mb-1">--</p>
+                    <p class="small text-muted mb-0">No calories recorded</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-4">
+                <p class="text-muted fw-bold mb-2">Total distance</p>
+
+                @if (Model.TotalMonthlyDistance.HasValue)
+                {
+                    <p class="h3 text-purple fw-bold mb-1">
+                        @Model.TotalMonthlyDistance.Value.ToString("0.##")
+                        <span class="fs-6 fw-normal text-muted">km</span>
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        Combined recorded distance
+                    </p>
+                }
+                else
+                {
+                    <p class="h3 text-muted fw-bold mb-1">--</p>
+                    <p class="small text-muted mb-0">No distance recorded</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm h-100">
+            <div class="card-body p-4">
+                <p class="text-muted fw-bold mb-2">Total steps</p>
+
+                @if (Model.TotalMonthlySteps.HasValue)
+                {
+                    <p class="h3 text-purple fw-bold mb-1">
+                        @Model.TotalMonthlySteps.Value.ToString("N0")
+                    </p>
+
+                    <p class="small text-muted mb-0">
+                        Combined recorded step count
+                    </p>
+                }
+                else
+                {
+                    <p class="h3 text-muted fw-bold mb-1">--</p>
+                    <p class="small text-muted mb-0">No steps recorded</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.AverageWeights.Count > 0)
+{
+    <div class="mt-5">
+        <h2 class="h4 text-purple fw-bold mb-1">
+            Long term weight trend
+        </h2>
+
+        <div class="chart-container">
+            <canvas id="myChart"
+                    role="img"
+                    aria-label="Line chart showing monthly average weight over time.">
+            </canvas>
+        </div>
+    </div>
+}
+
+<partial name="_DashboardScripts" model="Model" />

@@ -1,0 +1,22 @@
+﻿@model MVC.Models.DashboardViewModel
+
+<form class="d-flex flex-column flex-sm-row align-items-sm-end gap-2">
+    <div class="flex-grow-1">
+        <label for="date-select" class="form-label fw-bold">Month</label>
+        <select name="selectedDate" id="date-select" class="form-select">
+            @foreach (var date in Model.AvailableDates)
+            {
+                @if (Model.SelectedDate == date.Value)
+                {
+                    <option selected value="@date.Value">@date.Text</option>
+                }
+                else
+                {
+                    <option value="@date.Value">@date.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <input type="submit" value="Apply" class="btn btn-purple text-nowrap" />
+</form>

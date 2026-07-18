@@ -1,0 +1,43 @@
+﻿@using System.Text.Json
+@model MVC.Models.DashboardViewModel
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const chartLabels =
+        @Html.Raw(JsonSerializer.Serialize(Model.ChartLabels));
+
+    const averageWeights =
+        @Html.Raw(JsonSerializer.Serialize(Model.AverageWeights));
+
+    const ctx = document.getElementById('myChart');
+
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Average weight (kg)',
+                    data: averageWeights,
+                    borderColor: "#6f42c1",
+                    backgroundColor: "#6f42c1",
+                    borderWidth: 2,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Weight (kg)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>

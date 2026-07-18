@@ -1,5 +1,4 @@
-﻿@using System.Text.Json
-@model MVC.Models.ClientDashboardViewModel
+﻿@model MVC.Models.ClientDashboardViewModel
 
 @{
     ViewData["Title"] = $"{Model.UserName}'s Dashboard";
@@ -14,32 +13,13 @@
             </p>
         </div>
 
-        @if (Model.AvailableDates.Count > 0)
+        @if (Model.Dashboard.AvailableDates.Count > 0)
         {
-            <form class="d-flex flex-column flex-sm-row align-items-sm-end gap-2">
-                <div class="flex-grow-1">
-                    <label for="date-select" class="form-label fw-bold">Month</label>
-                    <select name="selectedDate" id="date-select" class="form-select">
-                        @foreach (var date in Model.AvailableDates)
-                        {
-                            @if (Model.SelectedDate == date.Value)
-                            {
-                                <option selected value="@date.Value">@date.Text</option>
-                            }
-                            else
-                            {
-                                <option value="@date.Value">@date.Text</option>
-                            }
-                        }
-                    </select>
-                </div>
-
-                <input type="submit" value="Apply" class="btn btn-purple text-nowrap" />
-            </form>
+            <partial name="_DashboardMonthSelector" model="Model.Dashboard" />
         }
     </div>
 
-    @if (Model.AvailableDates.Count == 0)
+    @if (Model.Dashboard.AvailableDates.Count == 0)
     {
         <div class="card shadow-sm">
             <div class="card-body p-4 text-center">
@@ -56,194 +36,7 @@
     }
     else
     {
-        <h2 class="h4 text-purple fw-bold mb-3">Monthly overview</h2>
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-5 g-3">
-            <div class="col">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <p class="text-muted fw-bold mb-2">Average weight</p>
-
-                        @if (Model.AverageMonthlyWeight.HasValue)
-                        {
-                            <p class="h3 text-purple fw-bold mb-1">
-                                @Model.AverageMonthlyWeight.Value.ToString("0.##")
-                                <span class="fs-6 fw-normal text-muted">kg</span>
-                            </p>
-
-                            <p class="small text-muted mb-0">
-                                Across recorded weigh-ins
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="h3 text-muted fw-bold mb-1">--</p>
-                            <p class="small text-muted mb-0">No weight recorded</p>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <p class="text-muted fw-bold mb-2">Weight change</p>
-
-                        @if (Model.ChangeInMonthlyWeight.HasValue)
-                        {
-                            var prefix = Model.ChangeInMonthlyWeight.Value > 0 ? "+" : "";
-
-                            <p class="h3 text-purple fw-bold mb-1">
-                                @($"{prefix}{Model.ChangeInMonthlyWeight.Value:0.##}")
-                                <span class="fs-6 fw-normal text-muted">kg</span>
-                            </p>
-
-                            <p class="small text-muted mb-0">
-                                From first to latest weigh-in
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="h3 text-muted fw-bold mb-1">--</p>
-                            <p class="small text-muted mb-0">
-                                Requires at least two weigh-ins
-                            </p>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <p class="text-muted fw-bold mb-2">Average calories</p>
-
-                        @if (Model.AverageMonthlyCalories.HasValue)
-                        {
-                            <p class="h3 text-purple fw-bold mb-1">
-                                @Model.AverageMonthlyCalories.Value.ToString("N0")
-                                <span class="fs-6 fw-normal text-muted">kcal</span>
-                            </p>
-
-                            <p class="small text-muted mb-0">
-                                Across days with recorded calories
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="h3 text-muted fw-bold mb-1">--</p>
-                            <p class="small text-muted mb-0">No calories recorded</p>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <p class="text-muted fw-bold mb-2">Total distance</p>
-
-                        @if (Model.TotalMonthlyDistance.HasValue)
-                        {
-                            <p class="h3 text-purple fw-bold mb-1">
-                                @Model.TotalMonthlyDistance.Value.ToString("0.##")
-                                <span class="fs-6 fw-normal text-muted">km</span>
-                            </p>
-
-                            <p class="small text-muted mb-0">
-                                Combined recorded distance
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="h3 text-muted fw-bold mb-1">--</p>
-                            <p class="small text-muted mb-0">No distance recorded</p>
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body p-4">
-                        <p class="text-muted fw-bold mb-2">Total steps</p>
-
-                        @if (Model.TotalMonthlySteps.HasValue)
-                        {
-                            <p class="h3 text-purple fw-bold mb-1">
-                                @Model.TotalMonthlySteps.Value.ToString("N0")
-                            </p>
-
-                            <p class="small text-muted mb-0">
-                                Combined recorded step count
-                            </p>
-                        }
-                        else
-                        {
-                            <p class="h3 text-muted fw-bold mb-1">--</p>
-                            <p class="small text-muted mb-0">No steps recorded</p>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+        <partial name="_DashboardStatistics" model="Model.Dashboard" />
     }
 
-    @if (Model.AverageWeights.Count > 0)
-    {
-        <div class="mt-5">
-            <h2 class="h4 text-purple fw-bold mb-1">
-                Long term weight trend
-            </h2>
-
-            <div class="chart-container">
-                <canvas id="myChart"
-                        role="img"
-                        aria-label="Line chart showing monthly average weight over time.">
-                </canvas>
-            </div>
-        </div>
-    }
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script>
-      const chartLabels =
-          @Html.Raw(JsonSerializer.Serialize(Model.ChartLabels));
-
-      const averageWeights =
-          @Html.Raw(JsonSerializer.Serialize(Model.AverageWeights));
-
-      const ctx = document.getElementById('myChart');
-
-      if (ctx) {
-          new Chart(ctx, {
-              type: 'line',
-              data: {
-                  labels: chartLabels,
-                  datasets: [{
-                      label: 'Average weight (kg)',
-                      data: averageWeights,
-                      borderColor: "#6f42c1",
-                      backgroundColor: "#6f42c1",
-                      borderWidth: 2,
-                      tension: 0.2
-                  }]
-              },
-              options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                      y: {
-                          beginAtZero: false,
-                          title: {
-                              display: true,
-                              text: 'Weight (kg)'
-                          }
-                      }
-                  }
-              }
-          });
-      }
-  </script>
