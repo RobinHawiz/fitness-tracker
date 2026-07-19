@@ -34,22 +34,7 @@
             {
                 <div class="col-12 col-sm-6 col-md-4 col-xl-3">
                     <div class="card shadow-sm h-100 daily-log-card">
-                        <h4 class="card-header bg-purple text-white fw-semibold">@item.Date.ToString()</h4>
-                        <div class="card-body">
-
-                            <h5 class="text-purple fw-bold">Body metrics</h5>
-                            <p class="mb-1"><span class="fw-bold">Weight:</span> @(item.WeightKg?.ToString("0.##") ?? "--") kg</p>
-
-                            <h5 class="mt-3 text-purple fw-bold">Macros</h5>
-                            <p class="mb-1"><span class="fw-bold">Calories:</span> @(item.Calories?.ToString() ?? "--")</p>
-                            <p class="mb-1"><span class="fw-bold">Fat:</span> @(item.Fat?.ToString("0.##") ?? "--") g</p>
-                            <p class="mb-1"><span class="fw-bold">Carbs:</span> @(item.Carbs?.ToString("0.##") ?? "--") g</p>
-                            <p class="mb-1"><span class="fw-bold">Protein:</span> @(item.Protein?.ToString("0.##") ?? "--") g</p>
-
-                            <h5 class="mt-3 text-purple fw-bold">Movement</h5>
-                            <p class="mb-1"><span class="fw-bold">Distance:</span> @(item.DistanceKm?.ToString("0.##") ?? "--") km</p>
-                            <p class="mb-1"><span class="fw-bold">Steps:</span> @(item.StepCount?.ToString() ?? "--")</p>
-                        </div>
+                        <partial name="_DailyLogContent" model="item" />
 
                         <div class="card-footer bg-white d-flex gap-2">
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-purple btn-sm">Edit</a>

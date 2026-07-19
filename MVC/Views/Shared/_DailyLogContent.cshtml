@@ -1,0 +1,17 @@
+﻿@model MVC.Models.DailyLogIndexViewModel
+
+<h2 class="h4 card-header bg-purple text-white fw-semibold">@Model.Date</h2>
+<div class="card-body">
+    <h3 class="h5 text-purple fw-bold">Body metrics</h3>
+    <p class="mb-1"><span class="fw-bold">Weight:</span> @(Model.WeightKg?.ToString("0.##") ?? "--") kg</p>
+
+    <h3 class="h5 mt-3 text-purple fw-bold">Macros</h3>
+    <p class="mb-1"><span class="fw-bold">Calories:</span> @(Model.Calories?.ToString() ?? "--")</p>
+    <p class="mb-1"><span class="fw-bold">Fat:</span> @(Model.Fat?.ToString("0.##") ?? "--") g</p>
+    <p class="mb-1"><span class="fw-bold">Carbs:</span> @(Model.Carbs?.ToString("0.##") ?? "--") g</p>
+    <p class="mb-1"><span class="fw-bold">Protein:</span> @(Model.Protein?.ToString("0.##") ?? "--") g</p>
+
+    <h3 class="h5 mt-3 text-purple fw-bold">Movement</h3>
+    <p class="mb-1"><span class="fw-bold">Distance:</span> @(Model.DistanceKm?.ToString("0.##") ?? "--") km</p>
+    <p class="mb-1"><span class="fw-bold">Steps:</span> @(Model.StepCount?.ToString() ?? "--")</p>
+</div>
